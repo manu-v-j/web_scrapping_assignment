@@ -67,3 +67,4 @@ class ProjectSpider(scrapy.Spider):
             "property_image_url":property_image_url
             
         }
+# webcraping
