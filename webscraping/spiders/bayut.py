@@ -38,11 +38,13 @@ class ProjectSpider(scrapy.Spider):
         bathrooms=response.css("span._783ab618[aria-label='Baths'] span._140e6903::text").get()[0]
         size=response.css("span._783ab618[aria-label='Area'] span._140e6903 span::text").get()
         agent_name=response.css("[aria-label='Agent name'] h2::text").get()
+        primary_image_url=response.css("picture img._4a3dac18::attr(src)").getall()
         breadcrumbs=response.css("span._43ad44d9::text").getall()
         amenities=response.css("span._7181e5ac::text").getall()
         description=response.css("span._3547dac9::text").getall()
         description = " ".join(description).strip()
-        property_image_url=response.css("div._948d9e0a _5ae2bf48 _95d4067f::attr(href)").getall()
+        property_image_url = response.css("picture img.dfc8fd76::attr(src)").getall()
+
 
         yield {
             "property_id": property_id, 
@@ -60,11 +62,10 @@ class ProjectSpider(scrapy.Spider):
                 "size":size
             },
             "agent_name":agent_name,
-            "primary_image_url":response.meta["link"],
+            "primary_image_url":primary_image_url,
             "breadcrumbs":breadcrumbs,
             "amenities":amenities,
             "description":description,
             "property_image_url":property_image_url
             
         }
-# webcraping
