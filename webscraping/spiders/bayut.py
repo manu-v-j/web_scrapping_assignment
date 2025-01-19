@@ -9,21 +9,19 @@ class ProjectSpider(scrapy.Spider):
         # Selecting all product listings
         products = response.css('li.a37d52f0')
 
-        for item in products:
-            # Extracting link from each product
+        for item in products:   
             link = item.css("a.d40f2294::attr(href)").get()
             if link:
                 yield response.follow(
                     link,
                     callback=self.parse_property,
-                    meta={"link": response.urljoin(link)},  # Pass link to the next function
+                    meta={"link": response.urljoin(link)},  
                 )
 
-        # Pagination Logic (Move to Next Page)
-        # next_page = response.css('[title="Next"]::attr(href)').get()
-        # if next_page:
-        #     next_page_url = response.urljoin(next_page)
-        #     yield response.follow(next_page_url, callback=self.parse)
+        next_page = response.css('[title="Next"]::attr(href)').get()
+        if next_page:
+            next_page_url = response.urljoin(next_page)
+            yield response.follow(next_page_url, callback=self.parse)
 
     def parse_property(self, response):
         amount= response.css("span._2d107f6e::text").get()
