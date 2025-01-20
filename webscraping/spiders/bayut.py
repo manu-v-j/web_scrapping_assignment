@@ -41,7 +41,7 @@ class ProjectSpider(scrapy.Spider):
         amenities=response.css("span._7181e5ac::text").getall()
         description=response.css("span._3547dac9::text").getall()
         description = " ".join(description).strip()
-        property_image_url = response.css("picture img.dfc8fd76::attr(src)").getall()
+        property_image_url = response.css("img._5a31e77d.e6a91003::attr(src)").getall()
 
 
         yield {
